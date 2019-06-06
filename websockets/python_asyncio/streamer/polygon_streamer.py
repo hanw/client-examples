@@ -35,10 +35,10 @@ class PolygonStreamer(object):
 						# await self.queue.put(message_str)
 						self.queue.put_nowait(message_str)
 					except asyncio.TimeoutError:
-						logging.warn("timeout error - no data in {} seconds, pinging connection".format(self._timeout))
+						#logging.warn("timeout error - no data in {} seconds, pinging connection".format(self._timeout))
 						pong_waiter = await asyncio.wait_for(websocket.ping(data="keepalive"), timeout=self._timeout)
 						await asyncio.wait_for(pong_waiter, timeout=2 * self._timeout)
-						logging.warn('ping/pong received, keeping connection alive...')
+						#logging.warn('ping/pong received, keeping connection alive...')
 					except Exception as e:
 						error_message = "resetting connection: {}".format(e.args)
 						logging.error(error_message)
